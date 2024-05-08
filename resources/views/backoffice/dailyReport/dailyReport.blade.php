@@ -69,7 +69,7 @@
                                                     <td><img src="{{$data->image}}"  alt="img" class="rounded-circle header-profile-user"></td>
                                                     <td>{{ $data->name }}</td>
                                                     <td>{{ $data->team }}</td>
-                                                    <td><a href="/view-report/{{$data->id}}"><button
+                                                    <td><a href="view-report/{{$data->id}}"><button
                                                                 class="btn btn-primary">Report</button></a></td>
                                                     {{-- <td><a href="{{route('view-report',['id'=>encrypt($data->id)])}}"><button
                                                                 class="btn btn-primary">Report</button></a></td> --}}
@@ -116,7 +116,7 @@
                             '<td><img src="' + employee.image + '"  alt="img" class="rounded-circle header-profile-user"></td>' +
                             '<td>' + employee.name + '</td>' +
                             '<td>' + employee.team + '</td>' +
-                            '<td><a href="/view-report/'+ employee.id +' "><button class="btn btn-primary">Report</button></a></td>'+
+                            '<td><a href="view-report/'+ employee.id +' "><button class="btn btn-primary">Report</button></a></td>'+
                             '</tr>'
 
                         $('#table-body').append(newRow)

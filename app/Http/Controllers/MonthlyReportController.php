@@ -37,16 +37,24 @@ class MonthlyReportController extends Controller
                  ->where('date', '<=', $request->end_date)
                  ->where('user_id', $request->employee_id)
                  ->get();
-        
+
+        if(!$reports->isEmpty()){
+            session([
+                'user_name' => $reports[0]->user_name,
+            ]);
+        }
+
         return redirect()->back()->with('reports', $reports);
 
         // return view('backoffice.monthlyReport.monthlyReport')->with(compact('reports'));
     }
 
+    // get daily report
     public function dailyLog($log_id){
-        $daily_log = DailyReportDetails::select('daily_report_details.*', 'users.name as user_name', 'daily_report_logs.start_time as day_start_time', 'daily_report_logs.end_time as day_end_time', 'daily_report_logs.date as date')
+        $daily_log = DailyReportDetails::select('daily_report_details.*', 'users.name as user_name', 'daily_report_logs.start_time as day_start_time', 'daily_report_logs.end_time as day_end_time', 'daily_report_logs.date as date','work_types.work_type as work_type_name')
                     ->join('users', 'daily_report_details.user_id', '=', 'users.id')
                     ->join('daily_report_logs', 'daily_report_details.daily_log_id', '=', 'daily_report_logs.id')
+                    ->join('work_types', 'daily_report_details.work_type', '=', 'work_types.id')
                     ->where('daily_log_id',$log_id)
                     ->get();
 

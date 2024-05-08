@@ -135,12 +135,13 @@
                                                 <thead>
                                                     <tr>
                                                         <th>#</th>
-                                                        <th data-priority="0">Start Time</th>
-                                                        <th data-priority="0">End Time</th>
-                                                        <th data-priority="0">Duration</th>
-                                                        <th data-priority="0">Work Title</th>
-                                                        <th data-priority="0">Work Details</th>
-                                                        <th data-priority="0">Action</th>
+                                                        <th data-priority="0" class="text-nowrap">Start Time</th>
+                                                        <th data-priority="0" class="text-nowrap">End Time</th>
+                                                        <th data-priority="0" class="text-nowrap">Duration</th>
+                                                        <th data-priority="0" class="text-nowrap">Work type</th>
+                                                        <th data-priority="0" class="text-nowrap">Work Title</th>
+                                                        <th data-priority="0" class="text-nowrap">Work Details</th>
+                                                        <th data-priority="0" class="text-nowrap">Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -169,13 +170,23 @@
                                                                 {{ $hours }} H : {{ $minutes }} M
                                                             </td>
 
-                                                            <td><input type="text" name="work_title[]"
-                                                                    value="{{ $log->work_title }}" readonly
-                                                                    style="border: none;outline:none;background:none;width:100px">
+                                                            <td><input type="text" name="work_type[]"
+                                                                value="{{ $log->work_type_name }}"
+                                                                readonly
+                                                                style="border: none;outline:none;background:none">
                                                             </td>
 
                                                             <td>
-                                                                <textarea name="work_details[]" class="textareaHeight" cols="50" style="border: none;background"  readonly>{{ $log->work_details }}</textarea>
+                                                                {{-- <input type="text" name="work_title[]"
+                                                                    value="{{ $log->work_title }}" readonly
+                                                                    style="border: none;outline:none;background:none;width:100px"> --}}
+                                                                <textarea name="work_title[]" class="textareaHeight" cols="50"
+                                                                    style="border: none;background:transparent;outline:none" readonly>{{ $log->work_title }}</textarea>
+                                                            </td>
+
+                                                            <td>
+                                                                <textarea name="work_details[]" class="textareaHeight" cols="50"
+                                                                    style="border: none;background:transparent;outline:none" readonly>{{ $log->work_details }}</textarea>
 
                                                                 {{-- <input type="text" name="work_details[]"
                                                                     value="{{ $log->work_details }}" readonly
@@ -201,21 +212,6 @@
                                                                 </div>
                                                             </td>
                                                         </tr>
-                                                        {{-- @php
-                                                            echo "<script>
-                                                                function auto_grow() {
-                                                                    console.log('start');
-                                                                    var textarea = document.querySelectorAll('.textareaHeight');
-
-                                                                    textarea.forEach(element => {
-                                                                        element.style.width = '2px';
-                                                                        element.style.width = (element.scrollHeight / 10) + 'px';
-                                                                    });
-                                                                    console.log('end');
-                                                                }
-                                                                auto_grow();
-                                                            </script>";
-                                                        @endphp --}}
                                                     @endforeach
                                                 </tbody>
                                             </table>
@@ -321,6 +317,31 @@
 
                                         <div class="row mb-2">
                                             <div class="">
+                                                <label class="form-label" for="formrow-email-input">Work Type <span
+                                                        class="text-danger">*</span></label>
+                                                <div class="d-flex gap-2">
+                                                    <select class="form-select" aria-label="Default select example"
+                                                        id="select_work_type" name="work_type">
+                                                        <option selected disabled class="text-center">
+                                                            --------Select--------</option>
+                                                        @foreach ($work_types as $work_type)
+                                                            <option value="{{ $work_type->id }}">{{ $work_type->work_type }}</option>
+                                                        @endforeach
+
+                                                    </select>
+                                                    @error('work_title')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                    @enderror
+
+                                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                        data-bs-target="#work_type">+</button>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-2">
+                                            <div class="">
                                                 <label class="form-label" for="formrow-email-input">Work Title <span
                                                         class="text-danger">*</span></label>
                                                 <input type="text" class="form-control" placeholder="Enter work title"
@@ -354,6 +375,47 @@
                         </div>
                     </div>
                 </div><!-- /.modal -->
+
+
+
+
+                <!-- Work Type modal content -->
+                <div id="work_type" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title mt-0" id="myModalLabel">Work type
+                                </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <form action="">
+                                        @csrf
+                                        <div class="">
+                                            <label for="formFile" class="form-label">Work Type<span
+                                                    class="text-danger">*</span></label>
+                                            <input class="form-control" type="text" id="workType" name="work_type"
+                                                placeholder="Enter work type">
+                                            @error('work_type')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                </div> <!-- end row -->
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-light waves-effect"
+                                    data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" id="submit"
+                                    class="btn btn-primary waves-effect waves-light">Add work type</button>
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                </div><!-- /.modal -->
+
 
 
                 <!-- Edit log modal content -->
@@ -402,6 +464,31 @@
 
                                         <div class="row mb-2">
                                             <div class="">
+                                                <label class="form-label" for="formrow-email-input">Work Type <span
+                                                        class="text-danger">*</span></label>
+                                                <div class="d-flex gap-2">
+                                                    <select class="form-select" aria-label="Default select example"
+                                                        id="select_work_type_edit" name="work_type">
+                                                        <option selected disabled class="text-center">
+                                                            --------Select--------</option>
+                                                        @foreach ($work_types as $work_type)
+                                                            <option value="{{ $work_type->id }}">{{ $work_type->work_type }}</option>
+                                                        @endforeach
+
+                                                    </select>
+                                                    @error('work_title')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                    @enderror
+
+                                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                        data-bs-target="#work_type_for_edit">+</button>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-2">
+                                            <div class="">
                                                 <label class="form-label" for="formrow-email-input">Work Title <span
                                                         class="text-danger">*</span></label>
                                                 <input type="text" class="form-control" placeholder="Enter work title"
@@ -435,9 +522,52 @@
                         </div>
                     </div>
                 </div><!-- /.modal -->
+
+
+
+                <!-- Edit modal Work Type modal content -->
+                <div id="work_type_for_edit" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title mt-0" id="myModalLabel">Work type
+                                </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <form action="">
+                                        @csrf
+                                        <div class="">
+                                            <label for="formFile" class="form-label">Work Type<span
+                                                    class="text-danger">*</span></label>
+                                            <input class="form-control" type="text" id="workType_edit" name="work_type"
+                                                placeholder="Enter work type">
+                                            @error('work_type')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                </div> <!-- end row -->
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-light waves-effect"
+                                    data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" id="submit_edit"
+                                    class="btn btn-primary waves-effect waves-light">Add work type</button>
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                </div><!-- /.modal -->
             </div>
         </div>
     </div>
+
+
+
+
 
 @endsection
 @push('scripts')
@@ -463,20 +593,146 @@
         }
     </script>
 
+    <script>
+        $(document).ready(function() {
+            $('#work_type').on('show.bs.modal', function(e) {
+                // Prevent the default behavior of hiding the first modal
+                $('#addLogModal').modal('show');
+            });
+
+            $('#work_type').on('hidden.bs.modal', function(e) {
+                // When the second modal is hidden, show the first modal
+                $('#addLogModal').modal('show');
+            });
+        });
+    </script>
+
+    
+    <script>
+        $(document).ready(function() {
+            $('#work_type_for_edit').on('show.bs.modal', function(e) {
+                // Prevent the default behavior of hiding the first modal
+                $('#addLeditLogModalogModal').modal('show');
+            });
+
+            $('#work_type_for_edit').on('hidden.bs.modal', function(e) {
+                // When the second modal is hidden, show the first modal
+                $('#editLogModal').modal('show');
+            });
+        });
+    </script>
+
 
     <script>
         $(document).ready(function() {
             $('.edit_log').on('click', function(e) {
                 var log = $(this).data('log');
-                console.log(log);
+                // console.log(log);
 
                 $('#log_id').val(log.id);
                 $('#start-time').val(log.start_time);
                 $('#end-time').val(log.end_time);
                 $('#work-title').val(log.work_title);
                 $('#work-details').val(log.work_details);
+                $('#select_work_type_edit').val(log.work_type);
             });
         });
+    </script>
+
+    <script>
+        $('#submit').click(function(e) {
+            e.preventDefault();
+           
+
+            let data = $('#workType').val();
+
+            $.ajax({
+                url: "{{ route('store.workType') }}",
+                type: "POST",
+                data: {
+                    work_type: data,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+
+                    $('#work_type').modal('hide');
+                    $('#select_work_type').empty();
+
+                    $('#select_work_type').append($('<option>', {
+                        selected: 'selected',
+                        disabled: 'disabled',
+                        class: 'text-center',
+                        text: '--------Select--------'
+                    }));
+
+                    // Append new options from response data
+                    $.each(response, function(index, item) {
+                        $('#select_work_type').append($('<option>', {
+                            value: item.id,
+                            text: item.work_type
+                        }));
+                    });
+
+                    $('#workType').val('');
+
+                },
+                error: function(xhr, status, error) {
+                    // Handle errors if any
+                    console.error(xhr.responseText);
+                }
+            });
+
+
+        })
+    </script>
+
+
+    {{-- ajax for edit modal add work types --}}
+    <script>
+        $('#submit_edit').click(function(e) {
+            e.preventDefault();
+           
+
+            let data = $('#workType_edit').val();
+
+            $.ajax({
+                url: "{{ route('store.workType') }}",
+                type: "POST",
+                data: {
+                    work_type: data,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+
+                    $('#work_type_for_edit').modal('hide');
+                    $('#select_work_type_edit').empty();
+
+                    $('#select_work_type_edit').append($('<option>', {
+                        selected: 'selected',
+                        disabled: 'disabled',
+                        class: 'text-center',
+                        text: '--------Select--------'
+                    }));
+
+                    // Append new options from response data
+                    $.each(response, function(index, item) {
+                        $('#select_work_type_edit').append($('<option>', {
+                            value: item.id,
+                            text: item.work_type
+                        }));
+                    });
+
+                    $('#workType_edit').val('');
+
+                },
+                error: function(xhr, status, error) {
+                    // Handle errors if any
+                    console.error(xhr.responseText);
+                }
+            });
+
+
+        })
     </script>
 
     <!-- *******time filtering******* -->

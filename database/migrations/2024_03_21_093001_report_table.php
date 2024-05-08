@@ -17,7 +17,10 @@ return new class extends Migration
             $table->foreignId('daily_log_id');
             $table->time('start_time');
             $table->time('end_time');
+            $table->time('day_start_time');
+            $table->time('day_end_time');
             $table->date('date');
+            $table->string('work_type')->nullable();
             $table->string('work_title')->nullable();
             $table->text('work_details')->nullable();
             $table->time('day_end');

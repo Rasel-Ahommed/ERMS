@@ -23,10 +23,29 @@
 
                 @if (auth()->user()->role == 2)
                     <li>
+                        <a href="{{route('today.plan')}}" class=" waves-effect">
+                            <i class="mdi mdi-file-check-outline"></i>
+                            <span>Today Work Plan</span>
+                        </a>
+                    </li>
+
+                    <li>
                         <a href="{{route('my-report')}}" class=" waves-effect">
                             <i class="mdi mdi-file-check-outline"></i>
                             <span>My Report</span>
                         </a>
+                    </li>
+
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+                            <i class="mdi mdi-note-multiple-outline"></i>
+                            <span>My Reports</span>
+                        </a>
+                        
+                        <ul>
+                            <li><a href="{{route('my-task-list')}}" class=" waves-effect"><span>My Daily Task List</span></a></li>
+                            <li><a href="{{route('my-monthly-report')}}" class=" waves-effect"><span>My Monthly Report</span></a></li>
+                        </ul>
                     </li>
                 @endif
 
@@ -37,8 +56,10 @@
                             <span>All Reports</span>
                         </a>
                         <ul class="sub-menu" aria-expanded="false">
+                            <li><a href="{{route('daily-plan-report')}}"> Daily Plan Reports</a></li>
                             <li><a href="{{route('daily-report')}}"> Daily Reports</a></li>
                             <li><a href="{{route('monthly-report')}}"> Monthly Reports</a></li>
+                            
                         </ul>
                     </li>
 
@@ -62,7 +83,7 @@
                     </li> --}}
 
 
-                  {{--  <li>
+                   {{-- <li>
                         <a href="kanbanboard.html" class=" waves-effect">
                             <i class="mdi mdi-billboard"></i>
                             <span class="badge rounded-pill bg-success float-end">New</span>
@@ -178,9 +199,9 @@
                         </ul>
                     </li>
 
-                    <li class="menu-title">Extras</li>
+                    <li class="menu-title">Extras</li> --}}
 
-                    <li>
+                    {{-- <li>
                         <a href="javascript: void(0);" class="has-arrow waves-effect">
                             <i class="mdi mdi-responsive"></i>
                             <span> Layouts </span>
@@ -196,9 +217,9 @@
                                     <li><a href="layouts-preloader.html">Preloader</a></li>
                                     <li><a href="layouts-colored-sidebar.html">Colored Sidebar</a></li>
                                 </ul>
-                            </li>
+                            </li> --}}
 
-                            <li>
+                            {{-- <li>
                                 <a href="javascript: void(0);" class="has-arrow">Horizontal</a>
                                 <ul class="sub-menu" aria-expanded="true">
                                     <li><a href="layouts-horizontal.html">Horizontal</a></li>
@@ -206,11 +227,11 @@
                                     <li><a href="layouts-hori-preloader.html">Preloader</a></li>
                                     <li><a href="layouts-hori-boxed-width.html">Boxed Layout</a></li>
                                 </ul>
-                            </li>
+                            </li> --}}
                         </ul>
                     </li>
 
-                    <li>
+                    {{-- <li>
                         <a href="javascript: void(0);" class="has-arrow waves-effect">
                             <i class="mdi mdi-account-box"></i>
                             <span> Authentication </span>

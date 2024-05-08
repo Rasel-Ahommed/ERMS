@@ -10,9 +10,9 @@ trait ImageUploadTrait
     {
         
         // Validate the uploaded file
-        $request->validate([
-            $inputName => 'image|mimes:jpeg,png,jpg,gif', 
-        ]);
+        // $request->validate([
+        //     // $inputName => 'image|mimes:jpeg,png,jpg,webp,gif', 
+        // ]);
         
         // Check if the request has the file
         if ($request->hasFile($inputName)) {
@@ -22,8 +22,8 @@ trait ImageUploadTrait
             $fileName = time() . '_' . 'user' . '.' . $file->getClientOriginalExtension();
 
             // Move the file to the custom folder
-            $path = $file->move(public_path($folder), $fileName);
-
+            $path = $file->move($folder, $fileName);
+            
             return $path;
         }
 

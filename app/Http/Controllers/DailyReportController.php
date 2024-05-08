@@ -31,7 +31,8 @@ class DailyReportController extends Controller
         $daily_reports = Reports::where('report_table.date', $currentDate)
                         ->where('report_table.user_id', $id)
                         ->get();
-                        
+        
+       
         session([
             'daily_reports' => $daily_reports,
             'user_id' => $id

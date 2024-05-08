@@ -15,9 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->foreignId('daily_log_id');
+            $table->foreignId('work_type');
             $table->time('start_time');
             $table->time('end_time');
-            $table->date('date');
+            $table->date('date')->nullable();
             $table->string('work_title')->nullable();
             $table->text('work_details')->nullable();
         });

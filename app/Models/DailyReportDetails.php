@@ -13,6 +13,7 @@ class DailyReportDetails extends Model
     protected $fillable = [
         'user_id',
         'daily_log_id',
+        'work_type',
         'start_time',
         'end_time',
         'work_title',

@@ -40,14 +40,13 @@ class SiteUserController extends Controller
     
         // Upload and handle image
         $path = $this->uploadImage($request, 'image', 'images');
-    
+        
         if ($path) {
             $relativePath = str_replace(public_path(), '', $path);
-            
             $data['image'] = $relativePath;
         } else {
             // Default image path if no image is uploaded
-            $data['image'] = '/images/avatar.png';
+            $data['image'] = 'images/avatar.png';
         }
 
         $user = User::create($data);
@@ -83,7 +82,6 @@ class SiteUserController extends Controller
                     $relativePath = str_replace(public_path(), '', $path);
                     
                     $imagePath = public_path($data->image);
-                    
                     // Check if the image file exists and delete it
                     if (file_exists($imagePath) && $data->image != '/images/avatar.png') {
                         unlink($imagePath);

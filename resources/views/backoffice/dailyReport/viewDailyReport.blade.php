@@ -104,6 +104,7 @@
                                                     <th class="text-nowrap">Start Time</th>
                                                     <th class="text-nowrap">End Time</th>
                                                     <th class="text-nowrap">Total Time</th>
+                                                    <th class="text-nowrap">Work Type</th>
                                                     <th class="text-nowrap">Work Title</th>
                                                     <th class="text-nowrap">Work Details</th>
                                                 </tr>
@@ -116,15 +117,18 @@
                                                         $startTime = \Carbon\Carbon::parse($report->start_time);
                                                         $endTime = \Carbon\Carbon::parse($report->end_time);
 
+                                                        $hours = $endTime->diff($startTime)->format('%h');
+                                                        $minutes = $endTime->diff($startTime)->format('%i');
                                                     @endphp
 
                                                     <tr>
                                                         <td>{{ $loop->index + 1 }}</td>
                                                         <td>{{ $startTime->format('h:i A') }}</td>
                                                         <td>{{ $endTime->format('h:i A') }}</td>
-                                                        <td>{{ $startTime->diff($endTime)->format('%H:%I') }}</td>
+                                                        <td>{{ $hours }} H : {{ $minutes }} M </td>
+                                                        <td style="min-width: 20rem;">{{ $report->work_type }}</td>
                                                         <td class="w-50">{{ $report->work_title }}</td>
-                                                        <td>{{ $report->work_details }}</td>
+                                                        <td class="w-50">{{ $report->work_details }}</td>
                                                     </tr>
                                                 @endforeach
                                             </tbody>
@@ -222,3 +226,7 @@
             });
         });
     </script>
+
+<script>
+    
+</script>

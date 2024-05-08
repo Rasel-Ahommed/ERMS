@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\DailyReportDetails;
 use App\Models\EmployeeReport;
 use App\Models\Reports;
+use App\Models\WorkType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Carbon\Carbon;
@@ -14,15 +15,13 @@ class EmployeeReportController extends Controller
     public function index()
     {
         $logs = EmployeeReport::join('daily_report_details', 'daily_report_logs.id', '=', 'daily_report_details.daily_log_id')
+            ->join('work_types', 'daily_report_details.work_type', '=', 'work_types.id')
             ->where('daily_report_logs.user_id', auth()->user()->id) // Specify table name or alias for user_id column
             ->where('daily_report_logs.is_closed', 0)
             ->select(
                 'daily_report_logs.*',
-                'daily_report_details.start_time as start_time',
-                'daily_report_details.end_time as end_time',
-                'daily_report_details.work_title as work_title',
-                'daily_report_details.work_details as work_details',
-                'daily_report_details.id as id',
+                'daily_report_details.*',
+                'work_types.work_type as work_type_name',
             )
             ->get();
 
@@ -30,7 +29,12 @@ class EmployeeReportController extends Controller
             ->where('is_closed', 0)
             ->first();
 
-        return view('backoffice.employeeReport.employeeReport', compact('logs', 'daily_log'));
+        $work_types = WorkType::where('team', auth()->user()->team)
+                                ->where('user_id',auth()->user()->id)
+                                ->get();
+                
+
+        return view('backoffice.employeeReport.employeeReport', compact('logs', 'daily_log','work_types'));
     }
 
     // day start 
@@ -71,11 +75,13 @@ class EmployeeReportController extends Controller
     // store logs 
     public function storeLogs(Request $request)
     {
+        // dd($request->all());
         $request->validate([
             'start_time' => 'required',
             'end_time' => 'required',
             'work_title' => 'required',
             'work_details' => 'required',
+            'work_type' => 'required'
         ]);
 
         // *******validate existing time*******
@@ -118,6 +124,7 @@ class EmployeeReportController extends Controller
         $data['end_time'] = $request->end_time;
         $data['work_title'] = $request->work_title;
         $data['work_details'] = $request->work_details;
+        $data['work_type'] = $request->work_type;
 
         DailyReportDetails::create($data);
 
@@ -127,6 +134,7 @@ class EmployeeReportController extends Controller
     // day end report
     public function dayEnd(Request $request)
     {
+        // dd($request->all());
         if (empty($request->start_time)) {
             Session::flash('error', 'Please create report log');
             return redirect()->back();
@@ -147,6 +155,7 @@ class EmployeeReportController extends Controller
             $data['work_details'] = $request->work_details[$index];
             $data['day_start_time'] = $log_report->start_time;
             $data['day_end_time'] = $current_time;
+            $data['work_type'] = $request->work_type[$index];
 
             Reports::create($data);
         }
@@ -169,6 +178,7 @@ class EmployeeReportController extends Controller
         $data->end_time = $request->end_time;
         $data->work_title = $request->work_title;
         $data->work_details = $request->work_details;
+        $data->work_type = $request->work_type;
 
         $data->update();
         return redirect()->back()->with('success', 'Log Updated successfully');

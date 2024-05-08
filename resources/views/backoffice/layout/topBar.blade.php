@@ -26,10 +26,10 @@
                         <a href="{{ route('home') }}" class="logo logo-light">
                             <span class="logo-sm">
                                 {{-- <h3 style="font-family: emoji;color: white;letter-spacing: 5px;font-size: 2rem;">UNICORN</h3> --}}
-                                <img src="{{ asset('assets/logo/unicorn-favicon.png') }}" alt="" height="22">
+                                <img src="{{ asset('RMS/assets/logo/unicorn-favicon.png') }}" alt="" height="22">
                             </span>
                             <span class="logo-lg">
-                                <img src="{{ asset('assets/logo/unicorn-full-logo.png') }}" alt=""
+                                <img src="{{ asset('RMS/assets/logo/unicorn-full-logo.png') }}" alt=""
                                     height="18"
                                     style="background: #fcfcfc;
                                     padding: 5px;
@@ -273,9 +273,9 @@
                         </button>
                         <div class="dropdown-menu dropdown-menu-end">
                             <!-- item-->
-                            {{-- <a class="dropdown-item" href="#"><i
+                            <a class="dropdown-item" href="{{route('user.profile')}}"><i
                                     class="mdi mdi-account-circle font-size-17 text-muted align-middle me-1"></i>
-                                Profile</a> --}}
+                                Profile</a>
                             {{-- <a class="dropdown-item" href="#"><i
                                     class="mdi mdi-wallet font-size-17 text-muted align-middle me-1"></i> My Wallet</a>
                             <a class="dropdown-item d-flex align-items-center" href="#"><i

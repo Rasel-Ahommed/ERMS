@@ -86,8 +86,8 @@
 
                         <h3 class="text-center mt-5 mb-4">
                             <a href="index.html" class="d-block auth-logo">
-                                <img src="{{asset('assets/logo/unicorn-full-logo.png')}}" alt="" height="30" class="auth-logo-dark">
-                                <img src="{{asset('assets/logo/unicorn-full-logo.png')}}" alt="" height="30" class="auth-logo-light">
+                                <img src="{{asset('RMS/assets/logo/unicorn-full-logo.png')}}" alt="" height="30" class="auth-logo-dark">
+                                <img src="{{asset('RMS/assets/logo/unicorn-full-logo.png')}}" alt="" height="30" class="auth-logo-light">
                             </a>
                         </h3>
 

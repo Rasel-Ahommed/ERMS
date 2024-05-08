@@ -16,6 +16,7 @@ class Reports extends Model
         'date',
         'start_time',
         'end_time',
+        'work_type',
         'work_title',
         'work_details',
         'day_start_time',

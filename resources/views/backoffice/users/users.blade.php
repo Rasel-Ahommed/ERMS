@@ -39,7 +39,7 @@
                     data-bs-target="#myModal">Create User</button>
                 <div class="row">
                     <div class="col-12">
-                        <div class="card">
+                        <div class="card" style="overflow: auto;">
                             <div class="card-body">
 
                                 <h4 class="card-title text-center fs-3">All Users</h4>
